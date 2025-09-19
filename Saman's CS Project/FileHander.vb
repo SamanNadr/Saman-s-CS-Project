@@ -1,27 +1,56 @@
 ﻿Imports System.Net.Http
 
 Module FileHander
-    Sub readClientsData()
+    Sub readClientsdata()
+
         FileOpen(1, "Clients.txt", OpenMode.Input)
 
         While Not EOF(1)
-            Dim tempClient As New Client
+
+            Dim tempClient As New Clients
 
             Input(1, tempClient.firstname)
             Input(1, tempClient.lastname)
             Input(1, tempClient.id)
-            Input(1, tempClient.workout)
 
             arrClients.Add(tempClient)
 
         End While
         FileClose(1)
+    End Sub
 
-    Sub writeClientsData()
-        FileOpen(1, "students.txt", OpenMode.Output)
+    Sub writeclientsdata()
+        FileOpen(1, "Clients.txt", OpenMode.Output)
 
         For Each tempClients In arrClients
-            WriteLine(1, tempClients.id, tempClients, tempClients.lastname, tempClients.block)
+            WriteLine(1, tempClients.firstname, tempClients.lastname, tempClients.id)
+        Next
+        FileClose(1)
+    End Sub
+
+
+    Sub readworkoutlistdata()
+        FileOpen(1, "Workoutlist.txt", OpenMode.Input)
+
+        While Not EOF(1)
+
+            Dim tempworkoutlist As New Workoutlist
+
+            Input(1, tempworkoutlist.workouts)
+
+            arrworkoutlist.Add(tempworkoutlist)
+
+        End While
+
+        FileClose(1)
+
+    End Sub
+
+    Sub writeworkoutlistdata()
+        FileOpen(1, "Workoutlist.txt", OpenMode.Output)
+
+        For Each tempworkoutlist In arrworkoutlist
+            WriteLine(1, tempworkoutlist.workouts)
         Next
         FileClose(1)
     End Sub
