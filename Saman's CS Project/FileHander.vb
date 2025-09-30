@@ -4,18 +4,22 @@ Module FileHander
     Sub readClientsdata()
 
         FileOpen(1, "Clients.txt", OpenMode.Input)
+        Try
+            While Not EOF(1)
 
-        While Not EOF(1)
+                Dim tempClient As New Clients
 
-            Dim tempClient As New Clients
+                Input(1, tempClient.firstname)
+                Input(1, tempClient.lastname)
+                Input(1, tempClient.id)
 
-            Input(1, tempClient.firstname)
-            Input(1, tempClient.lastname)
-            Input(1, tempClient.id)
+                arrClients.Add(tempClient)
 
-            arrClients.Add(tempClient)
+            End While
 
-        End While
+        Catch ex As Exception
+
+        End Try
         FileClose(1)
     End Sub
 
