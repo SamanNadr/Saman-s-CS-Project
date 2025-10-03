@@ -1,13 +1,15 @@
 ﻿Module DataStructures
     Public arrClients As New List(Of Clients)
-    Structure Clients
-        Dim firstname As String
-        Dim lastname As String
-        Dim id As String
-    End Structure
 
-    Public arrworkoutlist As New List(Of Workoutlist)
-    Structure Workoutlist
-        Dim workouts As String
-    End Structure
+    Public Class Clients
+        Public Property firstname As String
+        Public Property lastname As String
+        Public Property id As Integer
+    End Class
+
+    Public arrWorkoutList As New List(Of Workoutlist)
+
+    Public Class Workoutlist
+        Public Property workouts As String
+    End Class
 End Module

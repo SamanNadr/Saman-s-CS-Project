@@ -1,90 +1,97 @@
 ﻿Imports System.ComponentModel
 
 Public Class Form1
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         readClientsdata()
+        RefreshClientList()
     End Sub
 
     Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        'writeClientsData()
-        readClientsdata()
-    End Sub
-
-    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
-
-        lstOutput.Items.Clear()
-        readworkoutlistdata()
-        For Each workout In arrworkoutlist
-            lstOutput.Items.Add(workout.workouts)
-
-        Next
-    End Sub
-
-
-
-    Private Sub IstOutput_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstOutput.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-
-        lstOutput.Items.Clear()
-        readClientsdata()
-        For Each clients In arrClients
-
-            lstOutput.Items.Add(clients.firstname)
-            lstOutput.Items.Add(clients.lastname)
-            lstOutput.Items.Add(clients.id)
-
-        Next
-    End Sub
-
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles txtSearch.Click
-        For i = 0 To arrClients.Count - 1
-
-            If arrClients(i).firstname = txtSearch.Text Then
-
-                TextBox1.Text = arrClients(i).firstname
-                TextBox2.Text = arrClients(i).lastname
-
-
-
-                Dim indexcurrent As Integer = -1
-
-
-            End If
-        Next
-    End Sub
-
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
-
-    End Sub
-
-    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
-
-    End Sub
-
-    Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
-        Dim tempclients As New Clients
-
-        tempclients.firstname = InputBox("Enter First Name")
-        tempclients.lastname = InputBox("Enter Last Name")
-
-
-    End Sub
-
-    Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs)
-
-    End Sub
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Dim tempclients As New Clients
-
-        tempclients.firstname = TextBox1.Text
-        tempclients.lastname = TextBox2.Text
-
-
         writeclientsdata()
     End Sub
+
+    Private Sub btnLoadWorkouts_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        lstOutput.Items.Clear()
+        readworkoutlistdata()
+        For Each workout In arrWorkoutList
+            lstOutput.Items.Add(workout.workouts)
+        Next
+    End Sub
+
+    Private Sub btnLoadClients_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        RefreshClientList()
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles txtSearch.Click
+        Dim searchTerm As String = txtSearch.Text.Trim()
+
+        Dim foundClient = arrClients.Find(Function(c) c.firstname.Equals(searchTerm, StringComparison.OrdinalIgnoreCase))
+        If foundClient IsNot Nothing Then
+            TextBox1.Text = foundClient.firstname
+            TextBox2.Text = foundClient.lastname
+        Else
+            MessageBox.Show("Client not found.")
+        End If
+    End Sub
+
+    ' Add new client via InputBox
+    Private Sub btnAddClient_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim firstName As String = InputBox("Enter First Name")
+        Dim lastName As String = InputBox("Enter Last Name")
+
+        If String.IsNullOrWhiteSpace(firstName) Or String.IsNullOrWhiteSpace(lastName) Then
+            MessageBox.Show("First and Last names cannot be empty.")
+            Return
+        End If
+
+        Dim newClient As New Clients With {
+            .firstname = firstName,
+            .lastname = lastName,
+            .id = GenerateNewClientID()
+        }
+
+        arrClients.Add(newClient)
+        writeclientsdata()
+        RefreshClientList()
+
+        MessageBox.Show("Client added successfully.")
+    End Sub
+
+    ' Save client from TextBoxes
+    Private Sub btnSaveClient_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim firstName = TextBox1.Text.Trim()
+        Dim lastName = TextBox2.Text.Trim()
+
+        If String.IsNullOrWhiteSpace(firstName) Or String.IsNullOrWhiteSpace(lastName) Then
+            MessageBox.Show("First and Last names cannot be empty.")
+            Return
+        End If
+
+        Dim newClient As New Clients With {
+            .firstname = firstName,
+            .lastname = lastName,
+            .id = GenerateNewClientID()
+        }
+
+        arrClients.Add(newClient)
+        writeclientsdata()
+        RefreshClientList()
+
+        MessageBox.Show("Client saved successfully.")
+    End Sub
+
+    Private Sub RefreshClientList()
+        lstOutput.Items.Clear()
+        For Each client In arrClients
+            lstOutput.Items.Add($"ID: {client.id} - {client.firstname} {client.lastname}")
+        Next
+    End Sub
+
+    Private Function GenerateNewClientID() As Integer
+        If arrClients.Count = 0 Then Return 1
+        Return arrClients.Max(Function(c) c.id) + 1
+    End Function
+
 End Class
 
