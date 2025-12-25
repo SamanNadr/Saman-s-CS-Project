@@ -73,6 +73,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adminpanel.Designer.vb">
+      <DependentUpon>Adminpanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Adminpanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataStructures.vb" />
     <Compile Include="FileHander.vb" />
     <Compile Include="Form1.vb">
@@ -82,22 +88,35 @@
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.vb">
-      <DependentUpon>Form2.vb</DependentUpon>
+    <Compile Include="homedashboard.Designer.vb">
+      <DependentUpon>homedashboard.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form2.vb">
+    <Compile Include="homedashboard.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form3.Designer.vb">
-      <DependentUpon>Form3.vb</DependentUpon>
+    <Compile Include="Leaderboard.Designer.vb">
+      <DependentUpon>Leaderboard.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form3.vb">
+    <Compile Include="Leaderboard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginPanel.Designer.vb">
+      <DependentUpon>LoginPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LoginPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainpanel.Designer.vb">
+      <DependentUpon>mainpanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mainpanel.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -109,17 +128,50 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Progressreview.Designer.vb">
+      <DependentUpon>Progressreview.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Progressreview.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Validation.vb" />
+    <Compile Include="workoutcalender.Designer.vb">
+      <DependentUpon>workoutcalender.vb</DependentUpon>
+    </Compile>
+    <Compile Include="workoutcalender.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Adminpanel.resx">
+      <DependentUpon>Adminpanel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="homedashboard.resx">
+      <DependentUpon>homedashboard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Leaderboard.resx">
+      <DependentUpon>Leaderboard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginPanel.resx">
+      <DependentUpon>LoginPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainpanel.resx">
+      <DependentUpon>mainpanel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Progressreview.resx">
+      <DependentUpon>Progressreview.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="workoutcalender.resx">
+      <DependentUpon>workoutcalender.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

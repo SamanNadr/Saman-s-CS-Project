@@ -2,137 +2,88 @@
 
 Public Class Form1
 
+    Private Sub backbtn_Click(sender As Object, e As EventArgs) Handles backbtn.Click
+        Me.Hide()
+        mainpanel.Show()
+    End Sub
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        readClientsdata()
-        RefreshClientList()
-    End Sub
-
-    Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        writeclientsdata()
-    End Sub
-
-    Private Sub btnLoadWorkouts_Click(sender As Object, e As EventArgs) Handles Button6.Click
-        lstOutput.Items.Clear()
         readworkoutlistdata()
-        For Each workout In arrWorkoutList
-            lstOutput.Items.Add(workout.workouts)
+        loadworkouts()
+        readlogininfo()
+        writeleaderboarddata()
+    End Sub
+    Private Sub loadworkouts()
+        CheckedListBox1.Items.Clear()
+
+        Dim uniqueWorkouts = arrWorkoutList.
+        GroupBy(Function(l) l.workouts).
+        Select(Function(g) g.First()).
+        ToList()
+
+        ' Randomly shuffle the list
+        Dim rnd As New Random()
+        Dim shuffled = uniqueWorkouts.OrderBy(Function(x) rnd.Next()).ToList()
+
+        ' Take ONLY 5 (or fewer if list is small)
+        Dim randomFive = shuffled.Take(5).ToList()
+
+        ' Output the 5 random workouts
+        For i As Integer = 0 To randomFive.Count - 1
+            CheckedListBox1.Items.Add(randomFive(i).workouts)
         Next
     End Sub
 
-    Private Sub btnLoadClients_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        RefreshClientList()
-    End Sub
+    Private Sub Add_Click(sender As Object, e As EventArgs) Handles Add.Click
+        ' Make sure we are updating the correct client
+        For i As Integer = 0 To arrClients.Count - 1
+            If arrClients(i).name = ID Then  ' ID must be the current logged-in client
+                ' Go through every checked workout
+                For Each selectedWorkout As String In CheckedListBox1.CheckedItems
 
-    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles txtSearch.Click
+                    Select Case selectedWorkout
+                        Case "Push-ups" : arrClients(i).PushUps += 1
+                        Case "Wide push-ups" : arrClients(i).WidePushUps += 1
+                        Case "Diamond push-ups" : arrClients(i).DiamondPushUps += 1
+                        Case "Tricep dips" : arrClients(i).TricepDips += 1
+                        Case "Plank shoulder taps" : arrClients(i).PlankShoulderTaps += 1
+                        Case "Pike push-ups" : arrClients(i).PikePushUps += 1
+                        Case "Inchworm walkouts" : arrClients(i).InchwormWalkouts += 1
+                        Case "Decline push-ups" : arrClients(i).DeclinePushUps += 1
+                        Case "Superman hold" : arrClients(i).SupermanHold += 1
+                        Case "Arm circles" : arrClients(i).ArmCircles += 1
+                        Case "Sit-ups" : arrClients(i).SitUps += 1
+                        Case "Crunches" : arrClients(i).Crunches += 1
+                        Case "Leg raises" : arrClients(i).LegRaises += 1
+                        Case "Russian twists" : arrClients(i).RussianTwists += 1
+                        Case "Plank" : arrClients(i).Plank += 1
+                        Case "Side plank (left)" : arrClients(i).SidePlankLeft += 1
+                        Case "Side plank (right)" : arrClients(i).SidePlankRight += 1
+                        Case "Mountain climbers" : arrClients(i).MountainClimbers += 1
+                        Case "Flutter kicks" : arrClients(i).FlutterKicks += 1
+                        Case "Bicycle crunches" : arrClients(i).BicycleCrunches += 1
+                        Case "Squats" : arrClients(i).Squats += 1
+                        Case "Lunges" : arrClients(i).Lunges += 1
+                        Case "Calf raises" : arrClients(i).CalfRaises += 1
+                        Case "Wall sit" : arrClients(i).WallSit += 1
+                        Case "Glute bridges" : arrClients(i).GluteBridges += 1
+                        Case "Step-ups" : arrClients(i).StepUps += 1
+                        Case "Side leg raises" : arrClients(i).SideLegRaises += 1
+                        Case "Donkey kicks" : arrClients(i).DonkeyKicks += 1
+                        Case "Jump squats" : arrClients(i).JumpSquats += 1
+                        Case "High knees" : arrClients(i).HighKnees += 1
+                    End Select
 
-        Dim searchTerm As String = txtSearch.Text.Trim()
+                Next
 
-
-        Dim foundClient = arrClients.Find(
-        Function(c)
-            Return c.firstname.Equals(searchTerm, StringComparison.OrdinalIgnoreCase)
-        End Function)
-
-
-        If foundClient IsNot Nothing Then
-            TextBox1.Text = foundClient.firstname
-            TextBox2.Text = foundClient.lastname
-        Else
-
-            MessageBox.Show("Client not found.")
-        End If
-    End Sub
-
-
-
-    Private Sub btnAddClient_Click(sender As Object, e As EventArgs) Handles Button2.Click
-
-        Dim firstName As String = InputBox("Enter First Name")
-        Dim lastName As String = InputBox("Enter Last Name")
-
-
-        If String.IsNullOrWhiteSpace(firstName) Or String.IsNullOrWhiteSpace(lastName) Then
-            MessageBox.Show("First and last names can't be empty.")
-            Return
-        End If
-
-
-        Dim newClient As New Clients With {
-        .firstname = firstName,
-        .lastname = lastName,
-        .id = GenerateNewClientID()
-    }
-
-
-        arrClients.Add(newClient)
-        writeclientsdata()
-        RefreshClientList()
-
-
-        MessageBox.Show("Client added successfully.")
-    End Sub
-
-
-    ' Save client from TextBoxes
-    Private Sub btnSaveClient_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        ' Get the first and last name the user entered
-        Dim firstName = TextBox1.Text.Trim()
-        Dim lastName = TextBox2.Text.Trim()
-
-        ' Make sure both fields have something in them
-        If String.IsNullOrWhiteSpace(firstName) Or String.IsNullOrWhiteSpace(lastName) Then
-            MessageBox.Show("First and last names can't be empty.")
-            Return
-        End If
-
-        ' Create a new client using the user's input
-        Dim newClient As New Clients With {
-        .firstname = firstName,
-        .lastname = lastName,
-        .id = GenerateNewClientID()
-    }
-
-        ' Add the client to the list and update the saved data + UI
-        arrClients.Add(newClient)
-        writeclientsdata()
-        RefreshClientList()
-
-        ' Let the user know everything worked
-        MessageBox.Show("Client saved successfully.")
-    End Sub
-
-
-    Private Sub RefreshClientList()
-        lstOutput.Items.Clear()
-        For Each client In arrClients
-            lstOutput.Items.Add($"ID: {client.id} - {client.firstname} {client.lastname}")
-        Next
-    End Sub
-
-    Private Function GenerateNewClientID() As Integer
-        If arrClients.Count = 0 Then Return 1
-        Return arrClients.Max(Function(c) c.id) + 1
-    End Function
-
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles txtClientID.Click
-        ' Try to read the client ID the user typed in
-        Dim clientId As Integer
-
-        If Integer.TryParse(txtClientID.Text, clientId) Then
-            ' Try to delete the client and see if it worked
-            Dim success As Boolean = clientId
-
-            If success Then
-                MessageBox.Show("Client deleted successfully.")
-            Else
-                MessageBox.Show("Client not found.")
+                Exit For
             End If
-        Else
-            ' If the user didn't type a valid number
-            MessageBox.Show("Please enter a valid client ID.")
-        End If
+        Next
+
+        ' Save updated values back to file
+        writeclientsdata()
+        MsgBox("Workout progress saved!")
+
     End Sub
-
-
 End Class
 
