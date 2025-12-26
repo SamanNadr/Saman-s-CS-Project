@@ -59,5 +59,13 @@
 
     Public ID As String
 
+    Public arrcalender As New List(Of Calenders)
 
+    Public Class Calenders
+        Public Property namezz As String
+        Public Property workoutdate As String
+        Public Property workouttime As String
+
+
+    End Class
 End Module

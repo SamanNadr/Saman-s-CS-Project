@@ -80,6 +80,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DataStructures.vb" />
+    <Compile Include="Editcalenderpanel.Designer.vb">
+      <DependentUpon>Editcalenderpanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Editcalenderpanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FileHander.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
@@ -145,6 +151,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Adminpanel.resx">
       <DependentUpon>Adminpanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editcalenderpanel.resx">
+      <DependentUpon>Editcalenderpanel.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>

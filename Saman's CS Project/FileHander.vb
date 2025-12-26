@@ -225,5 +225,40 @@
         Next
         FileClose(1)
     End Sub
+    Sub readcalenderinfo()
+        ' If the file doesn't exist, exit
+        If Not IO.File.Exists("calender.txt") Then Return
+        ' Open the file for reading
+        FileOpen(1, "calender.txt", OpenMode.Input)
+        Try
+            ' Read until the end of the file
+            While Not EOF(1)
+                Dim tempcalender As New Calenders
+                ' Read username and password from the file
+                Input(1, tempcalender.namezz)
+                Input(1, tempcalender.workoutdate)
+                Input(1, tempcalender.workouttime)
+                ' Add the login info to the list
+                arrcalender.Add(tempcalender)
+            End While
+        Catch ex As Exception
+            ' Optional: handle any errors while reading
+        Finally
+            ' Always close the file
+            FileClose(1)
+        End Try
+    End Sub
+
+    Sub writecalenderinfo()
+        FileOpen(1, "calender.txt", OpenMode.Output)
+
+        'loops through all records in the user list
+        For Each tempcalender In arrcalender
+            'writes each record to a line in the file
+            WriteLine(1, tempcalender.workoutdate, tempcalender.workouttime, tempcalender.namezz)
+        Next
+
+        FileClose(1) 'saves to file
+    End Sub
 End Module
 
