@@ -26,6 +26,7 @@ Partial Class mainpanel
         Me.Homedashboardbtn = New System.Windows.Forms.Button()
         Me.Wokoutplanmanagerbtn = New System.Windows.Forms.Button()
         Me.Workoutcalenderbtn = New System.Windows.Forms.Button()
+        Me.Logoutbtn = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -68,11 +69,21 @@ Partial Class mainpanel
         Me.Workoutcalenderbtn.Text = "Workout Calender"
         Me.Workoutcalenderbtn.UseVisualStyleBackColor = True
         '
+        'Logoutbtn
+        '
+        Me.Logoutbtn.Location = New System.Drawing.Point(353, 365)
+        Me.Logoutbtn.Name = "Logoutbtn"
+        Me.Logoutbtn.Size = New System.Drawing.Size(75, 23)
+        Me.Logoutbtn.TabIndex = 4
+        Me.Logoutbtn.Text = "Log Out"
+        Me.Logoutbtn.UseVisualStyleBackColor = True
+        '
         'mainpanel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.Controls.Add(Me.Logoutbtn)
         Me.Controls.Add(Me.Workoutcalenderbtn)
         Me.Controls.Add(Me.Wokoutplanmanagerbtn)
         Me.Controls.Add(Me.Homedashboardbtn)
@@ -88,4 +99,5 @@ Partial Class mainpanel
     Friend WithEvents Homedashboardbtn As Button
     Friend WithEvents Wokoutplanmanagerbtn As Button
     Friend WithEvents Workoutcalenderbtn As Button
+    Friend WithEvents Logoutbtn As Button
 End Class

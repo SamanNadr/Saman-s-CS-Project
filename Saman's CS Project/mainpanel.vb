@@ -13,4 +13,9 @@
         Me.Hide()
         workoutcalender.Show()
     End Sub
+
+    Private Sub Logoutbtn_Click(sender As Object, e As EventArgs) Handles Logoutbtn.Click
+        Me.Hide()
+        LoginPanel.Show()
+    End Sub
 End Class
